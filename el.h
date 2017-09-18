@@ -1,5 +1,6 @@
 #ifndef EL_H
 #define EL_H
+#include <iostream>
 enum arith_op
 {
     op_add,
@@ -36,14 +37,33 @@ enum bool_expr_kind
     ek_logic
 };
 
+//struct declarations
+
 struct prog;
 struct bool_expr;
 struct num_expr;
 
+//Algorithm declarations
+
+int height(num_expr* e);
+int height(bool_expr* e);
+
+int max_args(num_expr* e);
+int max_args(bool_expr* e);
+int min_args(num_expr* e);
+int min_args(bool_expr* e);
+
+//struct definitions
+
 struct prog
 {
     prog(int n, num_expr* e) : args(n), body(e)
-    { }
+    {
+        if(n > max_args(e))
+            std::cout << "too many args" << std::endl;
+        else if(n < min_args(e))
+            std::cout << "not enought args" << std::endl;
+    }
 
     int args;
     num_expr* body;
@@ -118,7 +138,7 @@ struct bool_lit : bool_expr
 struct rel_expr : bool_expr
 {
     rel_expr(rel_op op, num_expr* e1, num_expr* e2)
-    : bool_expr(ek_bool), op(op), lhs(e1), rhs(e2)
+    : bool_expr(ek_rel), op(op), lhs(e1), rhs(e2)
     { }
 
     rel_op op;
@@ -136,10 +156,5 @@ struct logical_expr : bool_expr
     bool_expr* lhs;
     bool_expr* rhs;
 };
-
-//Algorithms
-
-int height(num_expr* e);
-int height(bool_expr* e);
 
 #endif // EL_H
