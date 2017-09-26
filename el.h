@@ -5,6 +5,7 @@ enum arith_op
 {
     op_add,
     op_sub,
+    op_mul,
     op_div,
     op_rem
 };
@@ -37,23 +38,49 @@ enum bool_expr_kind
     ek_logic
 };
 
+enum answer_kind
+{
+    err_ans,
+    int_ans
+};
+
+enum Error {error};
 //struct declarations
 
 struct prog;
+struct answer;
 struct bool_expr;
 struct num_expr;
 
 //Algorithm declarations
 
-int height(num_expr* e);
-int height(bool_expr* e);
+int height(num_expr*);
+int height(bool_expr*);
 
-int max_args(num_expr* e);
-int max_args(bool_expr* e);
-int min_args(num_expr* e);
-int min_args(bool_expr* e);
+int max_args(num_expr*);
+int max_args(bool_expr*);
+int min_args(num_expr*);
+int min_args(bool_expr*);
+
+answer eval(num_expr*);
+answer eval(bool_expr*);
+std::ostream& operator<<(std::ostream&, const answer&);
 
 //struct definitions
+
+struct answer
+{
+    answer_kind kind;
+
+    union
+    {
+        int n;
+        Error e;
+    };
+
+    answer(int i) : n(i), kind(int_ans) {};
+    answer (Error er) : e(er), kind(err_ans) {}
+};
 
 struct prog
 {
