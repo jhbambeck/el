@@ -326,10 +326,3 @@ answer eval(bool_expr* e)
 
     }
 }
-
-std::ostream& operator<<(std::ostream& os, const answer& ans)
-    {
-        if(ans.kind == int_ans) os << ans.n;
-        else os << ans.e;
-        return os;
-    }

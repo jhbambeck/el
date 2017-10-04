@@ -52,7 +52,7 @@ struct answer;
 struct bool_expr;
 struct num_expr;
 
-//Algorithm declarations
+//min/max args and height algorithms declarations
 
 int height(num_expr*);
 int height(bool_expr*);
@@ -64,7 +64,6 @@ int min_args(bool_expr*);
 
 answer eval(num_expr*);
 answer eval(bool_expr*);
-std::ostream& operator<<(std::ostream&, const answer&);
 
 //struct definitions
 
