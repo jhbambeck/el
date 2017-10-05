@@ -23,14 +23,19 @@ num_expr* fold_arith(arith_expr* e)
         {
         case op_add:
             r = new int_lit(templ->val + tempr->val);
+            break;
         case op_sub:
             r = new int_lit(templ->val - tempr->val);
+            break;
         case op_mul:
             r = new int_lit(templ->val * tempr->val);
+            break;
         case op_div:
             r = new int_lit(templ->val / tempr->val);
+            break;
         case op_rem:
             r = new int_lit(templ->val % tempr->val);
+            break;
         }
         return r;
     }
@@ -63,12 +68,16 @@ num_expr* fold(num_expr* e)
     {
     case ek_int:
         return fold_int(static_cast<int_lit*>(e));
+        break;
     case ek_arg:
         return fold_arg(static_cast<arg_expr*>(e));
+        break;
     case ek_arith:
         return fold_arith(static_cast<arith_expr*>(e));
+        break;
     case ek_if:
         return fold_if(static_cast<if_expr*>(e));
+        break;
     }
 }
 
@@ -92,20 +101,23 @@ bool_expr* fold_logical(logical_expr* e)
             if((templ->val == true) || (tempr->val == true))
                 r = new bool_lit(true);
             else r = new bool_lit(false);
+            break;
         case op_and:
             if((templ->val == true) && (tempr->val == true))
                 r = new bool_lit(true);
             else r = new bool_lit(false);
+            break;
         }
         return r;
     }
+    return e;
 }
 
 bool_expr* fold_rel(rel_expr* e)
 {
     e->lhs = fold(e->lhs);
     e->rhs = fold(e->rhs);
-    if((e->lhs->kind == ek_int) && (e->rhs->kind == ek_int));
+    if((e->lhs->kind == ek_int) && (e->rhs->kind == ek_int))
     {
         int_lit* templ = static_cast<int_lit*>(e->lhs);
         int_lit* tempr = static_cast<int_lit*>(e->rhs);
@@ -115,10 +127,13 @@ bool_expr* fold_rel(rel_expr* e)
         {
         case op_lt:
             if(templ->val < tempr->val) r_val = true;
+            break;
         case op_gt:
             if(templ->val > tempr->val) r_val = true;
+            break;
         case op_eq:
             if(templ->val == tempr->val) r_val = true;
+            break;
         }
         r = new bool_lit(r_val);
         return r;
@@ -132,10 +147,13 @@ bool_expr* fold(bool_expr* e)
     {
     case ek_bool:
         return fold_bool(static_cast<bool_lit*>(e));
+        break;
     case ek_rel:
         return fold_rel(static_cast<rel_expr*>(e));
+        break;
     case ek_logic:
         return fold_logical(static_cast<logical_expr*>(e));
+        break;
     }
 }
 

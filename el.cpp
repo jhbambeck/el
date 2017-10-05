@@ -34,12 +34,16 @@ int height(num_expr* e)
     {
     case ek_int:
         return height_int(static_cast<int_lit*>(e));
+        break;
     case ek_arg:
         return height_arg(static_cast<arg_expr*>(e));
+        break;
     case ek_arith:
         return height_arith(static_cast<arith_expr*>(e));
+        break;
     case ek_if:
         return height_if(static_cast<if_expr*>(e));
+        break;
     }
 }
 
@@ -66,10 +70,13 @@ int height(bool_expr* e)
     {
     case ek_bool:
         return height_bool(static_cast<bool_lit*>(e));
+        break;
     case ek_rel:
         return height_rel(static_cast<rel_expr*>(e));
+        break;
     case ek_logic:
         return height_logical(static_cast<logical_expr*>(e));
+        break;
     }
 }
 
@@ -101,12 +108,16 @@ int max_args(num_expr* e)
     {
     case ek_int:
         return max_args_int(static_cast<int_lit*>(e));
+        break;
     case ek_arg:
         return max_args_arg(static_cast<arg_expr*>(e));
+        break;
     case ek_arith:
         return max_args_arith(static_cast<arith_expr*>(e));
+        break;
     case ek_if:
         return max_args_if(static_cast<if_expr*>(e));
+        break;
     }
 }
 
@@ -131,10 +142,13 @@ int max_args(bool_expr* e)
     {
     case ek_bool:
         return max_args_bool(static_cast<bool_lit*>(e));
+        break;
     case ek_rel:
         return max_args_rel(static_cast<rel_expr*>(e));
+        break;
     case ek_logic:
         return max_args_logical(static_cast<logical_expr*>(e));
+        break;
     }
 }
 
@@ -166,12 +180,16 @@ int min_args(num_expr* e)
     {
     case ek_int:
         return min_args_int(static_cast<int_lit*>(e));
+        break;
     case ek_arg:
         return min_args_arg(static_cast<arg_expr*>(e));
+        break;
     case ek_arith:
         return min_args_arith(static_cast<arith_expr*>(e));
+        break;
     case ek_if:
         return min_args_if(static_cast<if_expr*>(e));
+        break;
     }
 }
 
@@ -196,10 +214,13 @@ int min_args(bool_expr* e)
     {
     case ek_bool:
         return min_args_bool(static_cast<bool_lit*>(e));
+        break;
     case ek_rel:
         return min_args_rel(static_cast<rel_expr*>(e));
+        break;
     case ek_logic:
         return min_args_logical(static_cast<logical_expr*>(e));
+        break;
     }
 }
 
@@ -225,14 +246,19 @@ answer eval_arith(arith_expr* e)
     {
     case op_add:
         return answer(ans_lhs.n + ans_rhs.n);
+        break;
     case op_sub:
         return answer(ans_lhs.n - ans_rhs.n);
+        break;
     case op_mul:
         return answer(ans_lhs.n * ans_rhs.n);
+        break;
     case op_div:
         return answer(ans_lhs.n / ans_rhs.n);
+        break;
     case op_rem:
         return answer(ans_lhs.n % ans_rhs.n);
+        break;
     }
     }
 
@@ -255,12 +281,16 @@ answer eval(num_expr* e)
     {
     case ek_int:
         return eval_int(static_cast<int_lit*>(e));
+        break;
     case ek_arg:
         return eval_arg(static_cast<arg_expr*>(e));
+        break;
     case ek_arith:
         return eval_arith(static_cast<arith_expr*>(e));
+        break;
     case ek_if:
         return eval_if(static_cast<if_expr*>(e));
+        break;
     }
 }
 
@@ -283,12 +313,15 @@ answer eval_rel(rel_expr* e)
     case op_lt:
         if(ans_lhs.n < ans_rhs.n) return answer(1);
         else return answer(0);
+        break;
     case op_gt:
         if(ans_lhs.n > ans_rhs.n) return answer(1);
         else return answer(0);
+        break;
     case op_eq:
         if(ans_lhs.n == ans_rhs.n) return answer(1);
         else return answer(0);
+        break;
     }
     }
     else return answer(error);
@@ -305,9 +338,11 @@ answer eval_logic(logical_expr* e)
     case op_and:
         if(ans_lhs.n == 1 && ans_rhs.n == 1) return answer(1);
         else return answer(0);
+        break;
     case op_or:
         if(ans_lhs.n==1 || ans_rhs.n==1) return answer(1);
         else return answer(0);
+        break;
     }
     }
     else return answer(error);
@@ -319,10 +354,12 @@ answer eval(bool_expr* e)
     {
     case ek_bool:
         return eval_bool(static_cast<bool_lit*>(e));
+        break;
     case ek_rel:
         return eval_rel(static_cast<rel_expr*>(e));
+        break;
     case ek_logic:
         return eval_logic(static_cast<logical_expr*>(e));
-
+        break;
     }
 }

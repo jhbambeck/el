@@ -1,7 +1,7 @@
 #include <iostream>
 #include "el.h"
 #include "fold_algos.h"
-//#include "printer.h"
+#include "printer.h"
 
 int main()
 {
@@ -9,15 +9,15 @@ int main()
     bool_expr *e1 = new rel_expr
     {
         op_eq,
-        new arg_expr {1},
-        new arg_expr {2}
+        new arg_expr {1, 1},
+        new arg_expr {2, 1}
     };
 
     //(if (< (arg 1) 0) -1 1)
     num_expr* e2 = new if_expr(
         new rel_expr(
             op_lt,
-            new arg_expr(1),
+            new arg_expr(1, 1),
             new int_lit(0)
         ),
         new int_lit(-1),
@@ -35,7 +35,7 @@ int main()
     num_expr* e4 = new if_expr
     (
      new bool_lit(true),
-     new arg_expr(4),
+     new arg_expr(4, 1),
      new int_lit(5)
      );
 
@@ -64,11 +64,22 @@ int main()
         auto* p2 = new prog(0, e2);
      }
      */
-/*
+
+    std::cout << e1 << std::endl;
+    std::cout << e2 << std::endl;
+    std::cout << e3 << std::endl;
+    std::cout << e4 << std::endl << std::endl;
+
+    e1 = fold(e1);
+    e2 = fold(e2);
+    e3 = fold(e3);
+    e4 = fold(e4);
+
     std::cout << e1 << std::endl;
     std::cout << e2 << std::endl;
     std::cout << e3 << std::endl;
     std::cout << e4 << std::endl;
-*/
+
+
     return 0;
 }

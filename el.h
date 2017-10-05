@@ -115,10 +115,11 @@ struct int_lit : num_expr
 
 struct arg_expr : num_expr
 {
-    arg_expr(int n) : num_expr(ek_arg), arg(n)
+    arg_expr(int n, int i) : num_expr(ek_arg), arg(n), ix(i)
     { }
 
     int arg;
+    int ix;
 };
 
 struct arith_expr : num_expr
